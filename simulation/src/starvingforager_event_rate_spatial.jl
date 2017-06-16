@@ -179,7 +179,7 @@ function starvingforager_event_rate_spatial(L,dim,initsize,t_term,alpha,K,sigma,
       Fsite_vec[new_location] += 1;
     end
 
-    #4  Recruitment/Recover (H)
+    #4  Recover (H)
     if draw_event >= pr_line[3] && draw_event < pr_line[4]
       #Randomly draw H position from Hind_vec
       id = rand(collect(1:NH));
