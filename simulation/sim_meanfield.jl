@@ -4,10 +4,9 @@ using RCall
 
 include("$(homedir())/Dropbox/PostDoc/2017_NSM_Spatial/NSM_Spatial/simulation/src/meanfield_event.jl")
 
-
-L=1000;
+L=800;
 dim=2;
-t_term=1000000000;
+t_term=100000000;
 #For M=100g
 lambda= 1.22149*10^-7.0;
 sigma=0.0000427472;
@@ -21,7 +20,7 @@ FStar = -((alpha*lambda*mu^2*(mu + 2*rho)*(lambda - sigma))/((2*lambda*rho + mu*
 HStar = -((alpha*lambda^2*mu*(mu + 2*rho)*(lambda - sigma))/((2*lambda*rho + mu*sigma)*(lambda*(2*delta*lambda + 2*beta*mu - lambda*mu)*rho + mu*(beta*mu + lambda*(delta + rho))*sigma)))
 RStar = (mu*(-lambda + sigma))/(2*lambda*rho + mu*sigma)
 
-mult = 1.2;
+mult = 1;
 initialdensity = [FStar*mult,HStar*mult,RStar];
 
 
@@ -29,7 +28,9 @@ time_out,prop_out,N_out = meanfield_event(L,dim,initialdensity,t_term,lambda,sig
 
 
 R"""
-plot($time_out,$(prop_out[1,:]),type='l',ylim=c(min($(prop_out[[1,2],:])),max($(prop_out[[1,2],:]))),col='green')
-lines($time_out,$(prop_out[2,:]),col='orange')
+library(RColorBrewer)
+pal = brewer.pal(5,'Set1')
+plot($time_out,$(prop_out[1,:]),type='l',ylim=c(min($(prop_out[[1,2],:])),max($(prop_out[[1,2],:]))),col=pal[3])
+lines($time_out,$(prop_out[2,:]),col=pal[5])
 lines($time_out,$(prop_out[3,:]),col='blue')
 """
